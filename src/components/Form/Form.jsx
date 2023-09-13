@@ -34,7 +34,7 @@ export class Form extends Component {
                         name='name'
                         type="text"
                         value={this.state.name}
-                        onChange={this.handleNameChange}
+                        onChange={this.handleChange}
                     />
                 </label>
                 <label>
@@ -43,7 +43,7 @@ export class Form extends Component {
                         name='tag'
                         type="text"
                         value={this.state.tag}
-                        onChange={this.handleTagChange}
+                        onChange={this.handleChange}
                     />
                 </label>
                 <button type="submit">Відправити</button>
