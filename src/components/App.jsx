@@ -1,62 +1,66 @@
-import React, { Component } from 'react'
-import { Form } from './Form/Form'
+import React, { Component } from 'react';
+import { nanoid } from 'nanoid';
 
-import { ColorPicker } from './ColorPicker/ColorPicker';
 export class App extends Component {
   state = {
+    contacts: [],
+    name: ''
+  };
 
-  }
+  handleInputChange = event => {
+    this.setState({ name: event.currentTarget.value });
+  };
 
-  handleNameChange = event => {
-    this.setState({ name: event.currentTarget.value })
-  }
+  handleInputSubmit = event => {
+    event.preventDefault();
+    const { name } = this.state;
 
-  handleTagChange = event => {
-    this.setState({ tag: event.currentTarget.value })
-  }
-  formSubmitHandler = data => {
+    if (name.trim() === '') {
+      alert('Please enter a valid name.');
+      return;
+    }
 
-    console.log(data)
+    const newContact = {
+      id: nanoid(),
+      name: name
+    };
 
-
-  }
+    this.setState((prevState) => ({
+      contacts: [...prevState.contacts, newContact],
+      name: ''
+    }));
+  };
 
   render() {
+    const { contacts, name } = this.state;
+
     return (
-      <div
-        style={{
-          height: '100vh',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          fontSize: 40,
-          color: '#010101'
-        }}
-      > <ColorPicker options={[
-        { label: 'red', color: '#F44336' },
-        { label: 'green', color: '#4CAF50' },
-        { label: 'blue', color: '#2196F3' },
-        { label: 'grey', color: '#607D8B' },
-        { label: 'pink', color: '#E91E63' },
-        { label: 'indigo', color: '#3F51B5' },
-      ]} />
-        <Form onSubmit={this.formSubmitHandler} />
-        {/* <input
-          type="text"
-          value={this.state.inputValue}
-          onChange={this.handleInputChange}
-        /> */}
+      <div>
+        <h1>Phonebook</h1>
+        <form onSubmit={this.handleInputSubmit}>
+          <label>
+            Name
+            <input
+              type="text"
+              name="name"
+              value={name}
+              onChange={this.handleInputChange}
+              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+              title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+              required
+            />
+          </label>
+          <button type="submit">Add contact</button>
+        </form>
+        <h2>Contacts</h2>
+        <ul>
+          {contacts.map((contact) => (
+            <li key={contact.id}>{contact.name}</li>
+          ))}
+        </ul>
       </div>
     );
   }
-};
+}
 
 
-// export const colorPickerOptions = [
-//   { label: 'red', color: '#F44336' },
-//   { label: 'green', color: '#4CAF50' },
-//   { label: 'blue', color: '#2196F3' },
-//   { label: 'grey', color: '#607D8B' },
-//   { label: 'pink', color: '#E91E63' },
-//   { label: 'indigo', color: '#3F51B5' },
-// ]
