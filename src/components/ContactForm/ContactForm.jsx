@@ -1,6 +1,6 @@
-
+import PropTypes from 'prop-types'
 import React, { Component } from "react";
-import './ContactForm.module.css'
+import './ContactForm.css'
 
 export class ContactForm extends Component {
   state = {
@@ -38,8 +38,8 @@ export class ContactForm extends Component {
     const { name, number } = this.state;
     return (
       <div>
-        <form onSubmit={this.handleInputSubmit}>
-          <label>
+        <form onSubmit={this.handleInputSubmit}  className='Container__form'>
+          <label className='text'>
             Name
             <input
               type="text"
@@ -51,7 +51,7 @@ export class ContactForm extends Component {
               required
             />
           </label>
-          <label >
+          <label  className='text'>
             Number
             <input
               type="tel"
@@ -63,10 +63,17 @@ export class ContactForm extends Component {
               required
             />
           </label>
-          <button type="submit">Add contact</button>
+          <button type="submit" className='Add__contact'>Add contact</button>
         </form>
       </div>
     )
   }
 
+};
+
+ContactForm.propTypes = {
+  state: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    number: PropTypes.string.isRequired,
+  }),
 };
